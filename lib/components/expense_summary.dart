@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:weeklyfinancetracker/bar%20graph/bar_graph.dart';
@@ -88,22 +87,54 @@ Widget build(BuildContext context) {
   String friday = convertDateTimeToString(startOfWeek.add(const Duration(days: 5)));
   String saturday = convertDateTimeToString(startOfWeek.add(const Duration(days: 6)));
 
-  return Consumer<ExpenseData>(
+    return Consumer<ExpenseData>(
     builder: (context, value, child) => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        //week total
+        // Weekly Budget
         Padding(
-          padding: const EdgeInsets.all(25.0),
-         child: Row(
-          children: [
-            const Text(
-              "Week Total",
-              style: TextStyle(fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0), // Reduced vertical padding
+          child: Row(
+            children: [
+              const Text(
+                "WEEKLY BUDGET",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
               ),
+              const SizedBox(width: 8.0), // Small space between text and value
               Text(
-                "\$${calculateWeekTotal(value, sunday, monday, tuesday, wednesday, thursday, friday, saturday)}"),
-          ],
-         ),
+                "\$${value.weeklyBudget.toStringAsFixed(2)}",
+                style: const TextStyle(
+                  fontSize: 20.0,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Week Total
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0), // Reduced vertical padding
+          child: Row(
+            children: [
+              const Text(
+                "WEEK TOTAL",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
+              ),
+              const SizedBox(width: 8.0), // Small space between text and value
+              Text(
+                "\$${calculateWeekTotal(value, sunday, monday, tuesday, wednesday, thursday, friday, saturday)}",
+                style: const TextStyle(
+                  fontSize: 20.0, // Set the desired font size
+                ),
+              ),
+            ],
+          ),
         ),
 
         SizedBox(
@@ -119,6 +150,20 @@ Widget build(BuildContext context) {
             satAmount: value.calculateDailyExpenseSummary()[saturday] ?? 0,
           ),
         ),
+
+          // Expenditures Heading
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0), // Add padding around heading
+            child: Text(
+              "EXPENDITURES",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24.0, // Larger font size for heading
+              ),
+            ),
+          ),
+
+
       ],
     ),
   );

@@ -4,8 +4,8 @@ import 'package:weeklyfinancetracker/datetime/date_time_helper.dart';
 import 'package:weeklyfinancetracker/models/expense_item.dart';
 
 class ExpenseData extends ChangeNotifier{
-
 List<ExpenseItem> overallExpenseList = [];
+double _weeklyBudget = 0.0;
 
 
 
@@ -14,25 +14,39 @@ List<ExpenseItem> getAllExpenseList(){
 }
 
 final db = HiveDataBase();
-void prepareData(){
-// if there exists data, get it
-if (db.readData().isNotEmpty){
-  overallExpenseList = db.readData();
- }
-}
 
+  void prepareData() {
+    if (db.readData().isNotEmpty) {
+      overallExpenseList = db.readData();
+    }
+    _weeklyBudget = db.readWeeklyBudget();
+  }
+
+
+  void setWeeklyBudget(double budget) {
+    _weeklyBudget = budget;
+    notifyListeners();
+    db.saveData(overallExpenseList, _weeklyBudget); // Save budget to database if needed
+  }
+
+  double get weeklyBudget => _weeklyBudget;
 
 void addNewExpense(ExpenseItem newExpense){
+  _weeklyBudget -= double.parse(newExpense.amount);
   overallExpenseList.add(newExpense);
   notifyListeners();
-  db.saveData(overallExpenseList);
+  db.saveData(overallExpenseList, _weeklyBudget);
 }
 
 void deleteExpense(ExpenseItem expense){
   overallExpenseList.remove(expense);
   notifyListeners();
-  db.saveData(overallExpenseList); 
+  db.saveData(overallExpenseList, _weeklyBudget); 
 }
+
+
+
+
 
 String getDayName(DateTime dateTime) {
   switch (dateTime.weekday) {

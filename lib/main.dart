@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:weeklyfinancetracker/data/expense_data.dart';
 import 'package:weeklyfinancetracker/pages/home_page.dart';
+import 'package:weeklyfinancetracker/pages/start_page.dart';
 
 
 
@@ -23,9 +24,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create:(context) => ExpenseData(),
-      builder: (context, child) => const MaterialApp(
+      builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: StartPage(),
         ),
       );
     }

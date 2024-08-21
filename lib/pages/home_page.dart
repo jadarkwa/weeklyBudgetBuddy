@@ -92,6 +92,52 @@ class _HomePageState extends State<HomePage> {
   );
 }
 
+void addWeeklyBudget() {
+  showDialog(
+    context: context,
+    builder: (context) {
+      final budgetController = TextEditingController(); // Controller for the budget input
+      return AlertDialog(
+        title: const Text('Set Weekly Budget'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: budgetController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                hintText: "Enter your weekly budget",
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          MaterialButton(
+            onPressed: () {
+              if (budgetController.text.isNotEmpty) {
+                double budget = double.parse(budgetController.text);
+                Provider.of<ExpenseData>(context, listen: false).setWeeklyBudget(budget);
+                Navigator.pop(context);
+              }
+            },
+            child: const Text('Save'),
+          ),
+          MaterialButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
+
+
+
+
+
 void deleteExpense(ExpenseItem expense){
   Provider.of<ExpenseData>(context, listen: false).deleteExpense(expense);
 }
@@ -139,32 +185,47 @@ void cancel() {
 Widget build(BuildContext context) {
   return Consumer<ExpenseData>(
     builder: (context, value, child) => Scaffold(
-      backgroundColor: Colors.grey[300],
-      floatingActionButton: FloatingActionButton(
-        onPressed: addNewExpense,
-        backgroundColor:Colors.black,
-        child: const Icon(Icons.add),
+      backgroundColor: Color.fromARGB(255, 210, 192, 168),
+      body: ListView(
+        children: [
+          ExpenseSummary(startOfWeek: value.startOfWeekDate()),
+          const SizedBox(height: 20),
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: value.getAllExpenseList().length,
+            itemBuilder: (context, index) => ExpenseTile(
+              name: value.getAllExpenseList()[index].name,
+              amount: value.getAllExpenseList()[index].amount,
+              dateTime: value.getAllExpenseList()[index].dateTime,
+              deleteTapped: (p0) => deleteExpense(value.getAllExpenseList()[index]),
+            ),
+          ),
+        ],
       ),
-      body: ListView(children: [
-        ExpenseSummary(startOfWeek: value.startOfWeekDate()),
-
-       const SizedBox(height:20),
-      
-      
-      ListView.builder(
-       shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: value.getAllExpenseList().length,
-        itemBuilder: (context, index) => ExpenseTile(
-          name: value.getAllExpenseList()[index].name, 
-          amount: value.getAllExpenseList()[index].amount,
-          dateTime: value.getAllExpenseList()[index].dateTime,
-          deleteTapped: (p0) => 
-          deleteExpense(value.getAllExpenseList()[index]),
-        ),                  
-      ), // ListView.builder
-     ]), // Scaffold
+floatingActionButton: Stack(
+        children: [
+          Positioned(
+            bottom: 16.0, // Adjust as needed
+            left: 40.0, // Adjust as needed
+            child: FloatingActionButton(
+              onPressed: addWeeklyBudget,
+              backgroundColor: Color.fromARGB(255, 175, 114, 78),
+              child: const Icon(Icons.attach_money),
+            ),
+          ),
+          Positioned(
+            bottom: 16.0, // Same as above for alignment
+            right: 16.0, // Adjust as needed
+            child: FloatingActionButton(
+              onPressed: addNewExpense,
+              backgroundColor: Color.fromARGB(255, 175, 114, 78),
+              child: const Icon(Icons.add_circle_outline),
+            ),
+          ),
+        ],
+      ),
     ),
-   ); // Consumer
-  } 
+  );
+  }
 }
