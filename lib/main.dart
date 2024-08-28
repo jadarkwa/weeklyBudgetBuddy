@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:weeklyfinancetracker/data/expense_data.dart';
-import 'package:weeklyfinancetracker/pages/home_page.dart';
 import 'package:weeklyfinancetracker/pages/start_page.dart';
 
 

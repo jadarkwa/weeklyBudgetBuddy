@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class ExpenseTile extends StatelessWidget {
@@ -31,13 +32,33 @@ class ExpenseTile extends StatelessWidget {
         ],
       ),
   
-    child:ListTile(
-      title: Text(name),
-      subtitle: Text(
-        '${dateTime.month} / ${dateTime.day} / ${dateTime.year}',
+   child: ListTile(
+  title: Text(
+    name,
+    style: GoogleFonts.aBeeZee(
+      textStyle: const TextStyle(color: Color.fromARGB(255, 255, 255, 255), 
+      fontWeight: FontWeight.bold,
+
       ),
-      trailing: Text('\$' + amount),
-      ),
+    ),
+  ),
+  subtitle: Text(
+    '${dateTime.month} / ${dateTime.day} / ${dateTime.year}',
+    style: const TextStyle(
+      color: Colors.grey, // Change this to your desired color
+    ),
+  ),
+  trailing: Text(
+    '\$$amount',
+    style: const TextStyle(
+      color: Color.fromARGB(255, 255, 255, 255), // Optional: Set the color for the trailing text
+    ),
+  ),
+   ),
+
+
+
+
     ); 
   }
 }

@@ -186,40 +186,59 @@ Widget build(BuildContext context) {
   return Consumer<ExpenseData>(
     builder: (context, value, child) => Scaffold(
       backgroundColor: Color.fromARGB(255, 210, 192, 168),
-      body: ListView(
-        children: [
-          ExpenseSummary(startOfWeek: value.startOfWeekDate()),
-          const SizedBox(height: 20),
-          ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: value.getAllExpenseList().length,
-            itemBuilder: (context, index) => ExpenseTile(
-              name: value.getAllExpenseList()[index].name,
-              amount: value.getAllExpenseList()[index].amount,
-              dateTime: value.getAllExpenseList()[index].dateTime,
-              deleteTapped: (p0) => deleteExpense(value.getAllExpenseList()[index]),
+
+      body: SafeArea(
+        child: Column(
+          children: [
+            ExpenseSummary(startOfWeek: value.startOfWeekDate()),
+            const SizedBox(height: 20),
+
+            // Expanded widget to ensure the ListView doesn't overflow
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 110, 66, 8), // Dark brown color
+                    borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
+                  child: ListView.builder(
+                    itemCount: value.getAllExpenseList().length,
+                    itemBuilder: (context, index) => ExpenseTile(
+                      name: value.getAllExpenseList()[index].name,
+                      amount: value.getAllExpenseList()[index].amount,
+                      dateTime: value.getAllExpenseList()[index].dateTime,
+                      deleteTapped: (p0) => deleteExpense(value.getAllExpenseList()[index]),
+                    ),
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+
+            // Bottom Padding to prevent overlap with buttons
+            SizedBox(height: 80), // Adjust height based on your button size
+          ],
+        ),
       ),
-floatingActionButton: Stack(
+
+      floatingActionButton: Stack(
         children: [
           Positioned(
-            bottom: 16.0, // Adjust as needed
+            bottom: 0.0, // Adjust as needed
             left: 40.0, // Adjust as needed
             child: FloatingActionButton(
               onPressed: addWeeklyBudget,
-              backgroundColor: Color.fromARGB(255, 175, 114, 78),
+              backgroundColor: const Color.fromARGB(255, 175, 114, 78),
               child: const Icon(Icons.attach_money),
             ),
           ),
           Positioned(
-            bottom: 16.0, // Same as above for alignment
+            bottom: 0.0, // Same as above for alignment
             right: 16.0, // Adjust as needed
             child: FloatingActionButton(
               onPressed: addNewExpense,
-              backgroundColor: Color.fromARGB(255, 175, 114, 78),
+              backgroundColor: const Color.fromARGB(255, 175, 114, 78),
               child: const Icon(Icons.add_circle_outline),
             ),
           ),
@@ -227,5 +246,5 @@ floatingActionButton: Stack(
       ),
     ),
   );
-  }
+ }
 }

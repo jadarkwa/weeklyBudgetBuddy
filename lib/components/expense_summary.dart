@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:weeklyfinancetracker/bar%20graph/bar_graph.dart';
 import 'package:weeklyfinancetracker/data/expense_data.dart';
@@ -91,49 +92,60 @@ Widget build(BuildContext context) {
     builder: (context, value, child) => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Weekly Budget
+       // Weekly Budget
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0), // Reduced vertical padding
-          child: Row(
-            children: [
-              const Text(
-                "WEEKLY BUDGET",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
+          padding: const EdgeInsets.symmetric(horizontal: 15.0), 
+          child: Container(
+            decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: const Color.fromARGB(255, 110, 66, 8)
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 8.0),
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              children: [
+                Text(
+                  "WEEKLY BUDGET",
+                  style: GoogleFonts.aBeeZee(
+                    textStyle: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20.0),
+                  ),
                 ),
-              ),
-              const SizedBox(width: 8.0), // Small space between text and value
-              Text(
-                "\$${value.weeklyBudget.toStringAsFixed(2)}",
-                style: const TextStyle(
-                  fontSize: 20.0,
+                const SizedBox(width: 8.0),
+                Text(
+                  "\$${value.weeklyBudget.toStringAsFixed(2)}",
+                  style: const TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 
-        // Week Total
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 8.0), // Reduced vertical padding
-          child: Row(
-            children: [
-              const Text(
-                "WEEK TOTAL",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
+          // Week Total
+          Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0), 
+          child: Container(
+            decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10.0),
+            color: const Color.fromARGB(255, 110, 66, 8)
+            ),
+            //color: const Color.fromARGB(255, 110, 66, 8),
+            padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 8.0),
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              children: [
+                Text(
+                  "WEEK TOTAL",
+                  style: GoogleFonts.aBeeZee(
+                  textStyle:const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20.0),
+                 ),
                 ),
-              ),
-              const SizedBox(width: 8.0), // Small space between text and value
-              Text(
-                "\$${calculateWeekTotal(value, sunday, monday, tuesday, wednesday, thursday, friday, saturday)}",
-                style: const TextStyle(
-                  fontSize: 20.0, // Set the desired font size
+                const SizedBox(width: 8.0),
+                Text(
+                  "\$${calculateWeekTotal(value, sunday, monday, tuesday, wednesday, thursday, friday, saturday)}",
+                  style: const TextStyle(color: Colors.white, fontSize: 20.0),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
 
@@ -152,16 +164,19 @@ Widget build(BuildContext context) {
         ),
 
           // Expenditures Heading
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0), // Add padding around heading
+             Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 1.0), // Add padding around heading
             child: Text(
               "EXPENDITURES",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24.0, // Larger font size for heading
+              style: GoogleFonts.aBeeZee(
+                  textStyle:const TextStyle(color: Color.fromARGB(242, 66, 33, 8), fontWeight: FontWeight.bold, fontSize: 30.0),
+                 ),
               ),
             ),
-          ),
+          
+
+
+
 
 
       ],
