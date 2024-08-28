@@ -39,6 +39,7 @@ void addNewExpense(ExpenseItem newExpense){
 }
 
 void deleteExpense(ExpenseItem expense){
+  _weeklyBudget += double.parse(expense.amount);
   overallExpenseList.remove(expense);
   notifyListeners();
   db.saveData(overallExpenseList, _weeklyBudget); 
